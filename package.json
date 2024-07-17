@@ -1,16 +1,13 @@
 {
-    "name": "gpt4-chat-server",
-    "version": "1.0.0",
-    "description": "A simple chat server using OpenAI's GPT-4",
-    "main": "server.js",
-    "scripts": {
-      "start": "node server.js"
-    },
-    "dependencies": {
-      "express": "^4.17.1",
-      "body-parser": "^1.19.0",
-      "node-fetch": "^2.6.1"
-    }
+  "name": "namuu",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0",
+    "node-fetch": "^2.6.1"
   }
-  
-  
+}
