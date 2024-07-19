@@ -6,10 +6,15 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(bodyParser.json());
+// CORS 설정
+const corsOptions = {
+    origin: '*', // 모든 출처를 허용 (배포 시 보안상의 이유로 제한하는 것이 좋습니다)
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
 
-// Serve static files from the root directory
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname))); // Serve from the root directory
 
 app.get('/', (req, res) => {
@@ -43,3 +48,4 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
