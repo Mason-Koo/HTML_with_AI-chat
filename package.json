@@ -16,11 +16,3 @@
     "node": "14.x"
   }
 }
-{
-  "name": "your-project-name",
-  "version": "1.0.0",
-  "engines": {
-    "node": "14.x"
-  },
-  // 기타 설정
-}
