@@ -8,10 +8,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Correct static directory
+
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname))); // Serve from the root directory
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Correct path
+    res.sendFile(path.join(__dirname, 'index.html')); // Serve index.html from the root directory
 });
 
 app.post('/api/chat', async (req, res) => {
