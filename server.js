@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -5,16 +6,19 @@ const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS 설정
 app.use(cors());
 app.use(bodyParser.json());
 
-// 정적 파일을 제공할 디렉토리 설정
+// 정적 파일 제공 설정
 app.use(express.static(__dirname + '/public'));
 
+// 기본 라우트 설정
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+// API 라우트 설정
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
     const apiKey = process.env.OPENAI_API_KEY;
@@ -39,8 +43,7 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+// 서버 시작
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
