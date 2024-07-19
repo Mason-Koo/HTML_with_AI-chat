@@ -5,9 +5,10 @@ const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors()); // CORS 설정
-
+app.use(cors());
 app.use(bodyParser.json());
+
+// 정적 파일을 제공할 디렉토리 설정
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
@@ -41,4 +42,5 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
 
