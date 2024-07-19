@@ -7,15 +7,15 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/public')); // Correct static directory
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/index.html'); // Correct path
 });
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
-    const apiKey = process.env.OPENAI_API_KEY;  // 환경 변수에서 API 키 가져오기
+    const apiKey = process.env.OPENAI_API_KEY;
 
     try {
         const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
@@ -40,4 +40,3 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
