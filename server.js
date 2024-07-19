@@ -5,12 +5,13 @@ const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors()); // CORS 설정
+
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public')); // Correct static directory
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html'); // Correct path
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.post('/api/chat', async (req, res) => {
@@ -40,3 +41,4 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
