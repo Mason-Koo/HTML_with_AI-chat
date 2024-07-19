@@ -1,7 +1,5 @@
 node_modules/
 .env
-
-# 시스템 파일 및 디렉토리
 .cache/
 .gitconfig
 .vscode/
