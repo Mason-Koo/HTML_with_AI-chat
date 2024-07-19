@@ -35,7 +35,7 @@ async function sendMessage() {
         console.error("Error:", error);
         const errorMessage = document.createElement('div');
         errorMessage.className = 'message gpt-message';
-        errorMessage.textContent = 'Error: Unable to get response from AI.';
+        errorMessage.textContent = '연결이 불안정합니다.인터넷 연결을 확인해주세요.';
         messagesDiv.appendChild(errorMessage);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
