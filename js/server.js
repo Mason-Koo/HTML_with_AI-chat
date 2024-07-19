@@ -1,21 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');  // CORS 패키지 추가
+const cors = require('cors');
 const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());  // CORS 미들웨어 사용
+app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY;  // 환경 변수에서 API 키 가져오기
 
     try {
         const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
@@ -40,5 +40,4 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
 
