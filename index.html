@@ -479,6 +479,11 @@
                         document.getElementById('user-input').value = '';
                     } catch (error) {
                         console.error("Error:", error);
+                        const errorMessage = document.createElement('div');
+                        errorMessage.className = 'message gpt-message';
+                        errorMessage.textContent = 'Error: Unable to get response from AI.';
+                        messagesDiv.appendChild(errorMessage);
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
                     }
                 }
             </script>
