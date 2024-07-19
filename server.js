@@ -1,25 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
-const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS 설정
-const corsOptions = {
-    origin: '*', // 모든 출처를 허용 (배포 시 보안상의 이유로 제한하는 것이 좋습니다)
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname))); // Serve from the root directory
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html')); // Serve index.html from the root directory
-});
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
