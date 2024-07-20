@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
-    const apiKey = sk-svcacct-iJ4X0d9jOz1rSAXCa50jT3BlbkFJO9hX2n7TwjBYJTtgoYFM;
+    const apiKey = process.env.OPENAI_API_KEY; // 환경 변수에서 API 키를 읽음
 
     try {
         const response = await fetch('https://api.openai.com/v1/completions', {
@@ -54,3 +54,4 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
