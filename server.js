@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = sk-svcacct-iJ4X0d9jOz1rSAXCa50jT3BlbkFJO9hX2n7TwjBYJTtgoYFM;
 
     try {
         const response = await fetch('https://api.openai.com/v1/completions', {
