@@ -26,14 +26,14 @@ app.post('/api/chat', async (req, res) => {
     const apiKey = process.env.OPENAI_API_KEY; // 환경 변수에서 API 키를 읽음
 
     try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch('https://api.openai.com/v1/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: 'text-davinci-003',
+                model: 'text-davinci-003', // 이 모델을 사용할 때의 엔드포인트
                 prompt: prompt,
                 max_tokens: 150
             })
@@ -54,4 +54,5 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
 
