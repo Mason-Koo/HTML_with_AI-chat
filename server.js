@@ -26,7 +26,7 @@ app.post('/api/chat', async (req, res) => {
     const apiKey = process.env.OPENAI_API_KEY; // 환경 변수에서 API 키를 읽음
 
     try {
-        const response = await fetch('https://api.openai.com/v1/completions', {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
