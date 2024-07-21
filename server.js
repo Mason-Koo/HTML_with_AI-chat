@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 허용할 출처 설정
+
 const allowedOrigins = ['https://www.namu7788.com', 'https://namu7788-26384c2e3ec8.herokuapp.com'];
 app.use(cors({
     origin: function (origin, callback) {
