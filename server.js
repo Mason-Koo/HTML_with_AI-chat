@@ -7,11 +7,19 @@ require('dotenv').config(); // 환경 변수 로드
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS 설정
-app.use(cors());
-app.use(bodyParser.json());
+// 허용할 출처 설정
+const allowedOrigins = ['https://www.namu7788.com'];
+app.use(cors({
+    origin: function(origin, callback){
+        if(!origin || allowedOrigins.indexOf(origin) !== -1){
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
 
-app.options('/api/chat', cors());
+app.use(bodyParser.json());
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
@@ -25,7 +33,7 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: 'NAMU',
+                model: 'gpt-3.5-turbo',
                 messages: [{ role: 'user', content: prompt }],
                 max_tokens: 150
             })
