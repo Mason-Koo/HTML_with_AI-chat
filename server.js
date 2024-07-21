@@ -22,7 +22,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.post('/api/chat', async (req, res) => {
-    const { prompt } = req.body;
+    const { message } = req.body;
     const apiKey = process.env.OPENAI_API_KEY; // 환경 변수에서 API 키를 읽음
 
     try {
@@ -34,10 +34,7 @@ app.post('/api/chat', async (req, res) => {
             },
             body: JSON.stringify({
                 model: 'gpt-3.5-turbo',
-                messages: [
-                    { role: 'system', content: 'You are a helpful assistant.' },
-                    { role: 'user', content: prompt }
-                ],
+                messages: [{ role: 'user', content: message }],
                 max_tokens: 150
             })
         });
@@ -57,4 +54,3 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
