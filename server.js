@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 // 허용할 출처 설정
 const allowedOrigins = ['https://www.namu7788.com'];
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    origin: function(origin, callback){
+        if(!origin || allowedOrigins.indexOf(origin) !== -1){
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -34,7 +34,10 @@ app.post('/api/chat', async (req, res) => {
             },
             body: JSON.stringify({
                 model: 'gpt-3.5-turbo',
-                messages: [{ role: 'user', content: prompt }],
+                messages: [
+                    { role: 'system', content: 'You are a helpful assistant.' },
+                    { role: 'user', content: prompt }
+                ],
                 max_tokens: 150
             })
         });
