@@ -10,7 +10,7 @@ async function sendMessage() {
 
     // 서버로 메시지 전송
     try {
-        const response = await fetch('https://namu7788.herokuapp.com/api/chat', {
+        const response = await fetch('https://namu7788-26384c2e3ec8.herokuapp.com/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
