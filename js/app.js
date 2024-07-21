@@ -19,7 +19,8 @@ async function sendMessage() {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, text: ${errorText}`);
         }
 
         const data = await response.json();
@@ -27,7 +28,7 @@ async function sendMessage() {
         // GPT 응답 메시지를 화면에 추가
         const gptMessageDiv = document.createElement('div');
         gptMessageDiv.className = 'message gpt-message';
-        gptMessageDiv.innerText = data.reply;
+        gptMessageDiv.innerText = data.reply || 'No reply received';
         messagesDiv.appendChild(gptMessageDiv);
     } catch (error) {
         console.error('Error occurred:', error.message);
@@ -40,3 +41,4 @@ async function sendMessage() {
     // 입력란 초기화
     document.getElementById('user-input').value = '';
 }
+
