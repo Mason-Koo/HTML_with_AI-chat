@@ -2,15 +2,13 @@ async function sendMessage() {
     const userInput = document.getElementById('user-input').value;
     const messagesDiv = document.getElementById('messages');
 
-    if (!userInput.trim()) return;
+    // 사용자 메시지를 화면에 추가
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.className = 'message user-message';
+    userMessageDiv.innerText = userInput;
+    messagesDiv.appendChild(userMessageDiv);
 
-    // 사용자가 입력한 메시지를 화면에 추가
-    const userMessage = document.createElement('div');
-    userMessage.className = 'message user-message';
-    userMessage.textContent = userInput;
-    messagesDiv.appendChild(userMessage);
-
-    // GPT API 호출
+    // 서버로 메시지 전송
     try {
         const response = await fetch('https://namu7788.herokuapp.com/api/chat', {
             method: 'POST',
@@ -20,23 +18,25 @@ async function sendMessage() {
             body: JSON.stringify({ prompt: userInput })
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        const gptMessage = document.createElement('div');
-        gptMessage.className = 'message gpt-message';
-        gptMessage.textContent = data.reply;
-        messagesDiv.appendChild(gptMessage);
 
-        // 스크롤을 아래로
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-        // 입력 창 초기화
-        document.getElementById('user-input').value = '';
+        // GPT 응답 메시지를 화면에 추가
+        const gptMessageDiv = document.createElement('div');
+        gptMessageDiv.className = 'message gpt-message';
+        gptMessageDiv.innerText = data.reply;
+        messagesDiv.appendChild(gptMessageDiv);
     } catch (error) {
-        console.error("Error:", error);
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'message gpt-message';
-        errorMessage.textContent = '연결이 불안정합니다.인터넷 연결을 확인해주세요.';
-        messagesDiv.appendChild(errorMessage);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        console.error('Error occurred:', error.message);
+        const errorMessageDiv = document.createElement('div');
+        errorMessageDiv.className = 'message gpt-message';
+        errorMessageDiv.innerText = 'Error occurred: ' + error.message;
+        messagesDiv.appendChild(errorMessageDiv);
     }
+
+    // 입력란 초기화
+    document.getElementById('user-input').value = '';
 }
