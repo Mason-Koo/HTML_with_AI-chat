@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 // 허용할 출처 설정
 const allowedOrigins = ['https://www.namu7788.com'];
 app.use(cors({
-    origin: function(origin, callback){
-        if(!origin || allowedOrigins.indexOf(origin) !== -1){
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
