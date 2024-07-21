@@ -7,19 +7,11 @@ require('dotenv').config(); // 환경 변수 로드
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 허용할 출처 설정
-const allowedOrigins = ['https://www.namu7788.com'];
-app.use(cors({
-    origin: function(origin, callback){
-        if(!origin || allowedOrigins.indexOf(origin) !== -1){
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
-
+// CORS 설정
+app.use(cors());
 app.use(bodyParser.json());
+
+app.options('/api/chat', cors());
 
 app.post('/api/chat', async (req, res) => {
     const { prompt } = req.body;
@@ -33,8 +25,8 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: 'text-davinci-003',
-                prompt: prompt,
+                model: 'NAMU',
+                messages: [{ role: 'user', content: prompt }],
                 max_tokens: 150
             })
         });
@@ -44,7 +36,7 @@ app.post('/api/chat', async (req, res) => {
         }
 
         const data = await response.json();
-        res.json({ reply: data.choices[0].text });
+        res.json({ reply: data.choices[0].message.content });
     } catch (error) {
         console.error('Error occurred:', error.message);
         res.status(500).json({ error: 'Something went wrong' });
@@ -54,3 +46,4 @@ app.post('/api/chat', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
