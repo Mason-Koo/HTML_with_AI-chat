@@ -7,7 +7,6 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 const allowedOrigins = ['https://www.namu7788.com', 'https://namu7788-26384c2e3ec8.herokuapp.com'];
 app.use(cors({
     origin: function (origin, callback) {
@@ -24,15 +23,13 @@ app.use(bodyParser.json());
 app.post('/api/chat', async (req, res) => {
     const { message } = req.body;
     const apiKey = process.env.OPENAI_API_KEY;
+    const assistantId = process.env.ASSISTANT_ID;  // 환경 변수에서 커스텀 어시스턴트 ID를 가져옴
 
     const prompt = `
-You are an AI specialized in business management consulting. Answer only questions related to business management, consulting, strategy, finance, or marketing. If the question is not related to these topics, respond with "질문에 답변드릴 수는 있지만,저는 경영 컨설팅에 특화된 AI입니다. 관련된 질문을 해주시면 감사하겠습니다.".
+You are an AI specialized in business management consulting. Answer only questions related to business management, consulting, strategy, finance, or marketing. If the question is not related to these topics, respond with "질문에 답변드릴 수는 있지만, 저는 경영 컨설팅에 특화된 AI입니다. 관련된 질문을 해주시면 감사하겠습니다.".
 Question: ${message}
 Answer:`;
 
-
-
-    
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -41,14 +38,16 @@ Answer:`;
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
-                messages: [{ role: 'user', content: message }],
+                model: assistantId,  // 환경 변수에서 가져온 커스텀 어시스턴트 ID 사용
+                messages: [{ role: 'user', content: prompt }],
                 max_tokens: 300
             })
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorResponse = await response.json();
+            console.error('Error response from OpenAI:', errorResponse);
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorResponse.error.message}`);
         }
 
         const data = await response.json();
