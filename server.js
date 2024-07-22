@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 app.post('/api/chat', async (req, res) => {
     const { message } = req.body;
     const apiKey = process.env.OPENAI_API_KEY;
-    const assistantId = process.env.ASSISTANT_ID;  // 환경 변수에서 커스텀 어시스턴트 ID를 가져옴
 
     const prompt = `
 You are an AI specialized in business management consulting. Answer only questions related to business management, consulting, strategy, finance, or marketing. If the question is not related to these topics, respond with "질문에 답변드릴 수는 있지만, 저는 경영 컨설팅에 특화된 AI입니다. 관련된 질문을 해주시면 감사하겠습니다.".
@@ -38,7 +37,7 @@ Answer:`;
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: assistantId,  // 환경 변수에서 가져온 커스텀 어시스턴트 ID 사용
+                model: 'gpt-3.5-turbo',
                 messages: [{ role: 'user', content: prompt }],
                 max_tokens: 300
             })
@@ -51,7 +50,12 @@ Answer:`;
         }
 
         const data = await response.json();
-        res.json({ reply: data.choices[0].message.content });
+        if (data && data.choices && data.choices.length > 0) {
+            res.json({ reply: data.choices[0].message.content });
+        } else {
+            console.error('Unexpected response structure:', data);
+            res.status(500).json({ error: 'Unexpected response structure' });
+        }
     } catch (error) {
         console.error('Error occurred:', error.message);
         res.status(500).json({ error: 'Something went wrong' });
@@ -61,3 +65,4 @@ Answer:`;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
