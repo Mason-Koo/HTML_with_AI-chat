@@ -41,7 +41,7 @@ Answer:`;
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: 'asst_svRDm2YmCRy7GoxMe2ZBFCso',
+                model: 'gpt-3.5-turbo',
                 messages: [{ role: 'user', content: message }],
                 max_tokens: 300
             })
