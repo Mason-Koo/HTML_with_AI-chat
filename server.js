@@ -7,6 +7,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 const allowedOrigins = ['https://www.namu7788.com', 'https://namu7788-26384c2e3ec8.herokuapp.com'];
 app.use(cors({
     origin: function (origin, callback) {
@@ -25,13 +26,14 @@ app.post('/api/chat', async (req, res) => {
     const apiKey = process.env.OPENAI_API_KEY;
     
     try {
-        const response = await fetch('https://api.openai.com/v1/assistants/asst_qGF6q6kvcMshImSYTXFcO8Lw/completions', {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
+                model: 'gpt-4o',
                 messages: [{ role: 'user', content: message }],
                 max_tokens: 300
             })
