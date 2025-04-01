@@ -1,2 +1,2 @@
-Connet to open AI api with Web ( with Heroku)
-for visit : https://www.namu7788.com/
+Connet to open AI api with Web ( with Heroku).
+Link: https://www.namu7788.com/
